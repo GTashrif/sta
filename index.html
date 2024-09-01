@@ -118,34 +118,38 @@
 
     function Q2() {
         function calculateConfidenceInterval() {
-            // Get the input values from the user
-            const mean = Number(document.getElementById('mean_Q2').value);
-            const stdDev = Number(document.getElementById('stndrdDev_Q2').value);
-            const n = Number(document.getElementById('randomSample_Q2').value);
+    // Get input values from the user
+    const meanRecoveryTime = parseFloat(document.getElementById('mean_Q2').value);
+    const stdDev = parseFloat(document.getElementById('stndrdDev_Q2').value);
+    const sampleSize = parseFloat(document.getElementById('randomSample_Q2').value);
 
-            // Check if inputs are valid numbers
-            if (isNaN(mean) || isNaN(stdDev) || isNaN(n) || n <= 0) {
-                console.error('Invalid input detected.');
-                return;
-            }
+    // Check if inputs are valid numbers
+    if (isNaN(meanRecoveryTime) || isNaN(stdDev) || isNaN(sampleSize) || sampleSize <= 0) {
+        console.error('Invalid input detected.');
+        return;
+    }
 
-            // Z-value for a 95% confidence interval
-            const z = 1.96;
+    // Calculate standard error
+    const standardError = stdDev / Math.sqrt(sampleSize);
 
-            // Calculate standard error
-            const standardError = stdDev / Math.sqrt(n);
+    // Degrees of freedom
+    const df = sampleSize - 1;
 
-            // Calculate confidence interval
-            const lowerBound = mean - z * standardError;
-            const upperBound = mean + z * standardError;
+    // Calculate the t-score for a 95% confidence interval
+    const tScoreValue = jStat.studentt.inv(0.975, df);
 
-            // Print the result with 3 decimal places
-            document.getElementById('lowerBound_q2').innerHTML = `Lower bound of the 95% CI: ${lowerBound.toFixed(3)}`;
-            document.getElementById('upperBound_q2').innerHTML = `Upper bound of the 95% CI: ${upperBound.toFixed(3)}`;
-        }
+    // Calculate the margin of error
+    const marginOfError = tScoreValue * standardError;
 
-    // Call the function to execute
-    calculateConfidenceInterval();
+    // Calculate confidence interval bounds
+    const lowerBound = meanRecoveryTime - marginOfError;
+    const upperBound = meanRecoveryTime + marginOfError;
+
+    // Display the results with 3 decimal places
+    document.getElementById('lowerBound_q2').innerHTML = `Lower bound of the 95% CI: ${lowerBound.toFixed(3)}`;
+    document.getElementById('upperBound_q2').innerHTML = `Upper bound of the 95% CI: ${upperBound.toFixed(3)}`;
+}
+calculateConfidenceInterval()
 
     }
 
