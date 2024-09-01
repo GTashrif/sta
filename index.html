@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STA1170 || MQ</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.4/jstat.min.js"></script>
+
+</head>
+<body>
+    <div class="heading">
+        <h1 style="color: purple;">STA1170 || MQ</h1>
+    </div>
+    <div class="intermediate"> 
+        <h1 style="color: blue"><u>Intermediate Test</u></h1>
+        <div class="q1">
+            <h1>Question-1</h1>
+            <p>A random sample of <input type="number" id="randomSample_Q1"> large corporate offices in Sydney is selected, and <input type="number" id="freeToUse_Q1"> are found to have free-to-use espresso machines for employees.
+                <br>
+
+                Compute a 95% confidence interval for the true proportion of large corporate offices that have free espresso facilities for employees. Give your final answer with at least 3 dp.
+                <br><br>
+                <button onclick="Q1()" style="cursor: pointer;">Submit</button>
+            </p>
+            <p id="lowerBound_q1"></p>
+            <p id="upperBound_q1"></p>
+        </div>
+        <hr>
+        <hr>
+        <div class="q2">
+            <h1>Question-2</h1>
+            <p>
+                A random sample is selected of <input type="number" id="randomSample_Q2"> patients who have recovered from a specific surgical procedure. The mean recovery time, from surgery to discharge, is <input type="number" id="mean_Q2"> days, and the sample standard deviation is <input type="number" id="stndrdDev_Q2"> days.
+                <br><br>
+                Compute a 95% confidence interval for the mean recovery time from the surgery.
+                <br><br>
+                Give your final answer with at least 3 dp.
+                <br><br>
+                <button onclick="Q2()" style="cursor: pointer;">Submit</button>
+                <p id="lowerBound_q2"></p>
+                <p id="upperBound_q2"></p>
+            </p>
+        </div>
+        <hr>
+        <hr>
+        <div class="q3">
+            <h1>Question-3</h1>
+            <p>
+                Assume the weight (in kg) of backpacks in Australian high schools follows a normal distribution with standard deviation σ=<input type="number" id="stndrdDev_Q3">.
+                <br></br>
+                A high school takes a sample of <input type="number" id="randomSample_Q3"> backpacks and computes the sample mean y¯=<input type="number" id="mean_Q3"> . Assume the sample is representative of backpacks in Australian high schools.
+                <br></br>
+                Compute the 95% confidence interval for the mean weight of backpacks in Australian high schools.
+                <br></br>
+                Give your final answer with at least 3 dp.
+                <br></br>
+                <button type="submit" onclick="Q3()" style="cursor: pointer;">Submit</button>
+
+            </p>
+            <p id="lowerBound_q3"></p>
+            <p id="upperBound_q3"></p>
+        </div>
+        <hr>
+        <hr>
+        <div class="q4">
+            <h1>Question-4</h1>
+            <p>
+                A primary school wants to monitor the lengths of pencils in its kindergarten classes, in order to place orders for new pencil sets at the right time. In a recent study, the school found that, after one term of use, the lengths of pencils followed a normal distribution with mean <input type="number" id="mean_Q4"> cm and standard deviation <input type="number" id="stndrdDev_Q4"> cm.
+                <br></br>
+                A sample of <input type="number" id="sampleSize_Q4"> one-term-old pencils are randomly selected from a class.
+                <br><br>
+                Answer the following question, keeping in mind that your answer must be a number between 0 and 1, i.e., do not use percentages. Give your final answer with at least 3 dp.
+                <br><br>
+                Compute the probability that the mean length of pencils for the selected sample is more than <input type="number" id="s_mean_Q4"> cm.
+                <br><br>
+                <button type="submit" onclick="Q4()" style="cursor: pointer;">Submit</button>
+                <br><br>
+                Answer: <p id="answer_q4"></p>
+            </p>
+        </div>
+        <hr><hr>
+        <div class="q5">
+            <h1>Question-5</h1>
+            <p style="color: red">Don't Know the Answer....</p>
+        </div>
+    </div>
+</body>
+
+<script>
+    function Q1() {
+        // Importing the Math library (not necessary in JS as it's built-in)
+    const z = 1.96;
+
+    // Function to calculate confidence interval
+        function calculateConfidenceInterval(n, foundFreeToUse) {
+            const pHat = foundFreeToUse / n;
+
+            // Standard error
+            const se = Math.sqrt((pHat * (1 - pHat)) / n);
+
+            // Confidence interval
+            const lowerBound = pHat - z * se;
+            const upperBound = pHat + z * se;
+
+            return { lowerBound, upperBound };
+        }
+
+    // Sample input
+    const n = Number(document.getElementById('randomSample_Q1').value);
+    const foundFreeToUse = Number(document.getElementById('freeToUse_Q1').value);
+
+    // Calculate and display the confidence interval
+    const { lowerBound, upperBound } = calculateConfidenceInterval(n, foundFreeToUse);
+    
+    document.getElementById('lowerBound_q1').innerHTML = `Lower bound of the 95% CI (SMALLER NUMBER HERE): ${lowerBound.toFixed(3)}`;
+    document.getElementById('upperBound_q1').innerHTML = `Upper bound of the 95% CI (SMALLER NUMBER HERE): ${upperBound.toFixed(3)}`;
+}
+
+    function Q2() {
+        function calculateConfidenceInterval() {
+            // Get the input values from the user
+            const mean = Number(document.getElementById('mean_Q2').value);
+            const stdDev = Number(document.getElementById('stndrdDev_Q2').value);
+            const n = Number(document.getElementById('randomSample_Q2').value);
+
+            // Check if inputs are valid numbers
+            if (isNaN(mean) || isNaN(stdDev) || isNaN(n) || n <= 0) {
+                console.error('Invalid input detected.');
+                return;
+            }
+
+            // Z-value for a 95% confidence interval
+            const z = 1.96;
+
+            // Calculate standard error
+            const standardError = stdDev / Math.sqrt(n);
+
+            // Calculate confidence interval
+            const lowerBound = mean - z * standardError;
+            const upperBound = mean + z * standardError;
+
+            // Print the result with 3 decimal places
+            document.getElementById('lowerBound_q2').innerHTML = `Lower bound of the 95% CI: ${lowerBound.toFixed(3)}`;
+            document.getElementById('upperBound_q2').innerHTML = `Upper bound of the 95% CI: ${upperBound.toFixed(3)}`;
+        }
+
+    // Call the function to execute
+    calculateConfidenceInterval();
+
+    }
+
+    function Q3(){
+        function calculateConfidenceInterval() {
+            // Get the input values from the user
+            const mean = Number(document.getElementById('mean_Q3').value);
+            const stdDev = Number(document.getElementById('stndrdDev_Q3').value);
+            const n = Number(document.getElementById('randomSample_Q3').value);
+
+            // Check if inputs are valid numbers
+            if (isNaN(mean) || isNaN(stdDev) || isNaN(n) || n <= 0) {
+                console.error('Invalid input detected.');
+                return;
+            }
+
+            // Z-value for a 95% confidence interval
+            const z = 1.96;
+
+            // Standard error
+            const se = stdDev / Math.sqrt(n);
+
+            // Confidence interval
+            const lowerBound = mean - z * se;
+            const upperBound = mean + z * se;
+
+            // Print the results with 3 decimal places
+            document.getElementById('lowerBound_q3').innerHTML = `Lower bound: ${lowerBound.toFixed(3)}`;
+            document.getElementById('upperBound_q3').innerHTML = `Upper bound: ${upperBound.toFixed(3)}`;
+        }
+
+        // Call the function to execute
+        calculateConfidenceInterval();
+
+    }
+
+    function Q4() {
+            function calculateProbability() {
+                // Get input values from the user
+                const n = Number(document.getElementById('sampleSize_Q4').value);
+                const mu = Number(document.getElementById('mean_Q4').value);
+                const sigma = Number(document.getElementById('stndrdDev_Q4').value);
+                const sampleMean = Number(document.getElementById('s_mean_Q4').value);
+
+                // Check if inputs are valid numbers
+                if (isNaN(n) || isNaN(mu) || isNaN(sigma) || isNaN(sampleMean) || n <= 0) {
+                    console.error('Invalid input detected.');
+                    document.getElementById('answer_q4').innerHTML = 'Invalid input detected.';
+                    return;
+                }
+
+                // Calculate standard error
+                const standardError = sigma / Math.sqrt(n);
+
+                // Calculate z-score
+                const z = (sampleMean - mu) / standardError;
+
+                // Calculate probability using the cumulative distribution function (CDF)
+                const probability = 1 - jStat.normal.cdf(z, 0, 1);
+
+                // Print the result with 6 decimal places
+                document.getElementById('answer_q4').innerHTML = `Probability: ${probability.toFixed(3)}`;
+            }
+
+            calculateProbability();
+        }
+
+</script>
+
+</html>
